@@ -85,29 +85,100 @@
 		<param name="animation">False</param>
 		<definition>
 			<control type="group">
-				<visible>!String.IsEmpty(ListItem.UserRating)</visible>
-				<animation effect="fade" time="0" condition="$PARAM[animation]">VisibleChange</animation>
-				<control type="image">
-					<left>3</left>
-					<top>-3</top>
-					<width>44</width>
-					<height>44</height>
-					<aspectratio>keep</aspectratio>
-					<texture colordiffuse="button_focus">overlays/badge.png</texture>
-				</control>
-				<control type="label">
-					<left>3</left>
-					<top>-3</top>
-					<align>center</align>
-					<aligny>center</aligny>
-					<width>44</width>
-					<height>44</height>
-					<font>font20_title</font>
-					<label>$INFO[ListItem.UserRating]</label>
-				</control>
-			</control>
-		</definition>
+                <visible>!String.IsEmpty(ListItem.UserRating)</visible>
+                <animation effect="fade" time="0" condition="$PARAM[animation]">VisibleChange</animation>
+                <control type="image">
+                    <left>3</left>
+                    <top>-3</top>
+                    <width>44</width>
+                    <height>44</height>
+                    <left>0</left>
+                    <top>0</top>
+                    <width>36</width>
+                    <height>36</height>
+                    <aspectratio>keep</aspectratio>
+                    <texture colordiffuse="button_focus">overlays/badge.png</texture>
+                    <texture colordiffuse="fffcc82a">overlays/badge.png</texture>
+                </control>
+                <control type="label">
+                    <left>3</left>
+                    <top>-3</top>
+                    <left>0</left>
+                    <top>0</top>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <width>44</width>
+                    <height>44</height>
+                    <width>36</width>
+                    <height>36</height>
+                    <font>font20_title</font>
+                    <textcolor>ff000000</textcolor>
+                    <label>$INFO[ListItem.UserRating]</label>
+                </control>
+            </control>
+        </definition>
 	</include>
+    <include name="PlotListing">
+        <control type="group">
+            <left>132</left>
+            <top>6</top>
+            <include>UserRatingCircle</include>
+        </control>
+        <control type="label">
+            <label>$INFO[ListItem.Genre]</label>
+            <textcolor>button_focus</textcolor>
+            <visible>String.IsEmpty(ListItem.UserRating) + String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.Genre)</visible>
+            <scroll>true</scroll>
+            <top>0</top>
+            <left>0</left>
+        </control>
+        <control type="label">
+            <label>$INFO[ListItem.Genre]</label>
+            <textcolor>button_focus</textcolor>
+            <visible>!String.IsEmpty(ListItem.UserRating) + String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.Genre)</visible>
+            <scroll>true</scroll>
+            <top>0</top>
+            <left>52</left>
+        </control>
+        <control type="label">
+            <label>$INFO[ListItem.Genre]</label>
+            <textcolor>button_focus</textcolor>
+            <visible>String.IsEmpty(ListItem.UserRating) + !String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.Genre)</visible>
+            <scroll>true</scroll>
+            <top>0</top>
+            <left>132</left>
+        </control>
+        <control type="label">
+            <label>$INFO[ListItem.Genre]</label>
+            <textcolor>button_focus</textcolor>
+            <visible>!String.IsEmpty(ListItem.UserRating) + !String.IsEmpty(ListItem.Rating) + !String.IsEmpty(ListItem.Genre)</visible>
+            <scroll>true</scroll>
+            <top>0</top>
+            <left>184</left>
+        </control>
+        <control type="image">
+            <description>Rating value</description>
+            <left>0</left>
+            <top>8</top>
+            <width>128</width>
+            <height>32</height>
+            <aspectratio align="left">keep</aspectratio>
+            <texture colordiffuse="button_focus" fallback="rating/0.png">$VAR[RatingTexture]</texture>
+            <visible>!String.IsEmpty(ListItem.Rating) + [Container.Content(Movies) | Container.Content(TVShows) | Container.Content(Seasons) | Container.Content(Episodes) | Container.Content(MusicVideos) | Container.Content(Albums)] + !String.Contains(ListItem.Label,..)</visible>
+        </control>
+        <control type="textbox">
+            <label>$INFO[ListItem.Plot]</label>
+            <visible>String.IsEmpty(ListItem.Genre) + String.IsEmpty(ListItem.Rating)</visible>
+            <autoscroll time="3000" delay="7000" repeat="5000">!System.HasModalDialog + Skin.HasSetting(AutoScroll)</autoscroll>
+            <top>0</top>
+        </control>
+        <control type="textbox">
+            <label>$INFO[ListItem.Plot]</label>
+            <visible>!String.IsEmpty(ListItem.Rating) | !String.IsEmpty(ListItem.Genre)</visible>
+            <autoscroll time="3000" delay="7000" repeat="5000">!System.HasModalDialog + Skin.HasSetting(AutoScroll)</autoscroll>
+            <top>60</top>
+        </control>
+    </include>
 	<include name="InfoList">
 		<param name="item_label">$INFO[ListItem.Year,[COLOR button_focus],[/COLOR]  -  ]$INFO[ListItem.Label]</param>
 		<param name="path">$VAR[InfoListPathVar]</param>
@@ -877,6 +948,12 @@
 						<include>BreadcrumbsLabel</include>
 						<visible>!String.isempty(Container.PluginCategory)</visible>
 					</control>
+                    <control type="label">
+                        <label>$INFO[Window.Property(heading), / [COLOR button_focus],[/COLOR]]</label>
+                        <include>BreadcrumbsLabel</include>
+                        <scroll>true</scroll>
+                        <visible>!String.IsEmpty(Container.PluginName)</visible>
+                    </control>
 					<control type="label">
 						<label>$INFO[Control.GetLabel(10),: ]</label>
 						<include>BreadcrumbsLabel</include>
@@ -1060,6 +1137,7 @@
 		</control>
 	</include>
 	<include name="DefaultBackground">
+        <param name="right_bound">1121</param>
 		<definition>
 			<control type="videowindow">
 				<depth>DepthBackground</depth>
@@ -1097,7 +1175,7 @@
 					<control type="image">
 						<left>-3</left>
 						<top>0</top>
-						<right>1193</right>
+						<right>$PARAM[right_bound]</right>
 						<height>100%</height>
 						<aspectratio aligny="center">scale</aspectratio>
 						<fadetime>400</fadetime>
@@ -1291,7 +1369,7 @@
 	<include name="ContentPanel">
 		<param name="width">500</param>
 		<param name="left">-40</param>
-		<param name="right"></param>
+		<param name="right">0</param>
 		<param name="top">-10%</param>
 		<param name="height">120%</param>
 		<param name="flipx">false</param>

@@ -20,6 +20,23 @@
 		<value condition="String.IsEmpty(Container.PluginName)">$INFO[ListItem.FolderPath]</value>
 		<value></value>
 	</variable>
+    <variable name="TitleParent">
+        <value condition="!String.IsEmpty(Container.PluginName)">$INFO[Window.Property(heading)]</value>
+    </variable>
+	<variable name="RatingTexture">
+		<value condition="String.IsEmpty(ListItem.Rating)">rating/0.png</value>
+		<value condition="Integer.IsLess(ListItem.Rating,1)">rating/0.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,1)">rating/1.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,2)">rating/2.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,3)">rating/3.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,4)">rating/4.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,5)">rating/5.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,6)">rating/6.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,7)">rating/7.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,8)">rating/8.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,9)">rating/9.png</value>
+		<value condition="Integer.IsLessOrEqual(ListItem.Rating,10)">rating/10.png</value>
+	</variable>
 	<variable name="AddonCountLabel">
 		<value condition="Integer.IsGreater(Container(8000).NumItems,10)">&gt;9</value>
 		<value condition="Integer.IsGreater(Container(8000).NumItems,9)">9</value>
@@ -84,6 +101,7 @@
 		<value condition="String.IsEmpty(Container.PluginName) + Container.Content(tvshows) + String.IsEqual(Container.SortMethod,$LOCALIZE[556])">$INFO[ListItem.Property(WatchedEpisodes)]$INFO[ListItem.Property(TotalEpisodes), / ,]</value>
 		<value condition="String.IsEqual(Container.SortMethod,$LOCALIZE[556])">$INFO[ListItem.Year]</value>
 		<value condition="!String.isempty(ListItem.Appearances)">$LOCALIZE[38026]: $INFO[ListItem.Appearances]</value>
+        <value condition="!String.IsEmpty(Container.PluginName) + String.IsEmpty(LisItem.Label2) + !String.IsEmpty(ListItem.Year)">$INFO[ListItem.Year]</value>
 		<value>$INFO[ListItem.Label2]</value>
 	</variable>
 	<variable name="ShiftLeftTextBoxVar">
